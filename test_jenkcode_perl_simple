@@ -1,0 +1,15 @@
+perl -e '
+my $inSendData=0;
+while (<>) {
+    if ($_ =~ /^=> Send data,.*/) {
+        $inSendData=1;
+    } elsif ($_ =~ /^[\da-z]{4}:.*/) {
+        if (!($inSendData)) {
+            print $_;
+            $inSendData=0;
+        }
+    } else {
+        print $_;
+        $inSendData=0;
+    }
+}'
