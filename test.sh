@@ -18,8 +18,8 @@ cleanup_tmpfile() {
 
 # just pretty print stuff
 maxpathlen=0
-for path in ./test_jenkcode_*; do [[ ${#path} -gt $maxpathlen ]] && maxpathlen=${#path}; done
-for path in ./test_jenkcode_*; do # actually run tests
+for path in ./test_jenkode_*; do [[ ${#path} -gt $maxpathlen ]] && maxpathlen=${#path}; done
+for path in ./test_jenkode_*; do # actually run tests
     printf "%s[TEST]%s %-${maxpathlen}s " "$cmagenta" "$creset" "$path"
     # encode then decode and compare if we got the input back out
     if cat "$path" | ./jenkode -e | ./jenkode -d | diff --color -u "$path" -; then
