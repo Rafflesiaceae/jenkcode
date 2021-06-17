@@ -14,13 +14,19 @@
 #                       and did this
 import sys
 def usage():
-    sys.stderr.write("fam pass me either -e/--encode or -d/--decode and then something in stdin jesus christ\n")
+    sys.stderr.write("fam pass me something in stdin and then either -e/--encode or -d/--decode as 1st param and then pass me the groovy version you want to target as 2nd param - because haha yeah there is no stable string-literal version to target because they changed what they escape between versions, haha yes really, they did, like you might ask why, I am with you, the thing is, I don't _actually_ wanna know, I just don't want to set a default and then it blows up for you again during usage and you have to figure out why, you can look the groovy-version up on a running jenkins instance if you go to 'Manage Jenkins' => 'About Jenkins', and then you can see like org.codehaus.groovy:groovy-all:X.Y.Z and then you pass me 'X.Y.Z', take care fam\n")
     sys.exit(1)
-if len(sys.argv) != 2: usage()
+if len(sys.argv) != 3: usage()
 # see https://groovy-lang.org/syntax.html#_escaping_special_characters
-escapem=['b'   , 'f'   , 'n'   , 'r'   , 's'  , 't'   , '\\'   , '\''   , '"']
-escapee=['\b'  , '\f'  , '\n'  , '\r'  , ' '  , '\t'  , '\\'   , '\''   , '"']
-escaped=['\\b' , '\\f' , '\\n' , '\\r' , '\s' , '\\t' , '\\\\' , '\\\'' , '\\"']
+version=[ int(d) for d in sys.argv[2].split(".") ]
+if version < [3,0,3]:
+    escapem=['t'   , 'b'   , 'n'   , 'r'   , 'f'   , '\\'   , '\''   , '"']
+    escapee=['\t'  , '\b'  , '\n'  , '\r'  , '\f'  , '\\'   , '\''   , '"']
+    escaped=['\\t' , '\\b' , '\\n' , '\\r' , '\\f' , '\\\\' , '\\\'' , '\\"']
+else:
+    escapem=['b'   , 'f'   , 'n'   , 'r'   , 's'  , 't'   , '\\'   , '\''   , '"']
+    escapee=['\b'  , '\f'  , '\n'  , '\r'  , ' '  , '\t'  , '\\'   , '\''   , '"']
+    escaped=['\\b' , '\\f' , '\\n' , '\\r' , '\s' , '\\t' , '\\\\' , '\\\'' , '\\"']
 if sys.argv[1] in ["-e","--encode"]:
     result="'"
     for line in sys.stdin:
