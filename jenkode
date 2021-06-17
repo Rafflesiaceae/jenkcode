@@ -21,7 +21,7 @@ if len(sys.argv) != 2: usage()
 escapem=['b'   , 'f'   , 'n'   , 'r'   , 's'  , 't'   , '\\'   , '\''   , '"']
 escapee=['\b'  , '\f'  , '\n'  , '\r'  , ' '  , '\t'  , '\\'   , '\''   , '"']
 escaped=['\\b' , '\\f' , '\\n' , '\\r' , '\s' , '\\t' , '\\\\' , '\\\'' , '\\"']
-if sys.argv[1] in ["-e","--decode"]:
+if sys.argv[1] in ["-e","--encode"]:
     result="'"
     for line in sys.stdin:
         for c in line:
